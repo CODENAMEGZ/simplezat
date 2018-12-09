@@ -53,8 +53,6 @@ class CommentViewTest(TestCase):
                 '<input type="submit"></form>'
             self.assertContains(response, expected, status_code=200)
 
-
-
     def test_submit_comment_form_should_redirect_to_thanks_page(self):
         url = reverse(
             'comments',
