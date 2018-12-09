@@ -1,0 +1,11 @@
+version : '3.7'
+
+services:
+  app:
+    image: 400206/simplezat:stable
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    command: ./entrypoint.dev.sh

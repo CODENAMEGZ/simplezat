@@ -1,0 +1,15 @@
+FROM python:3.7.1-alpine
+
+MAINTAINER 400206
+
+ENV APPLICATION_ROOT /app
+RUN mkdir $APPLICATION_ROOT
+WORKDIR $APPLICATION_ROOT
+
+Run pip3 install pipenv
+
+COPY Pipfile $APPLICATION_ROOT/
+
+Run pipenv install --dev
+
+EXPOSE 8000
