@@ -69,6 +69,7 @@ jobs:
             ssh-keyscan -H 35.247.163.63 >> ~/.ssh/known_hosts
             pipenv install
             pipenv run ansible-playbook -i server_hosts playbooks/dev.yml --extra-vars "project_root=~/simplezat"
+
 workflows:
   version: 2
   simplezat_pipeline:
