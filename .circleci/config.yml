@@ -9,6 +9,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
+
   python_dependencies:
     working_directory: ~/simplezat
     docker:
@@ -19,7 +20,7 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            echo 'hello'
+            pipenv install --dev
   static_analysis:
     working_directory: ~/simplezat
     docker:
@@ -28,9 +29,11 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Install Dependencies
+          name: Run Static Analysis
           command: |
-            echo 'hello'
+            pipenv install --dev
+            pipenv run flake8
+
   unit_tests:
     working_directory: ~/simplezat
     docker:
@@ -39,20 +42,35 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Install Dependencies
+          name: Run Unit Tests
           command: |
-            echo 'hello'
-  deploy_dev:
+            pipenv install --dev
+            cd simplezat && pipenv run python manage.py test
+
+ deploy_dev:
     working_directory: ~/simplezat
     docker:
       - image: circleci/python:3.7.1
     steps:
       - attach_workspace:
           at: .
+      - setup_remote_docker
       - run:
-          name: Install Dependencies
+          name: Build Stable Images
           command: |
-            echo 'hello'
+            docker build -t draf/simplezat:stable -f Dockerfile.dev .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push draf/simplezat:stable
+      - add_ssh_keys:
+          fingerprints:
+            - ""
+      - run:
+          name: Deploy to Development Server
+          command: |
+            cd deployment
+            pipenv install
+            pipenv run ansible-playbook -i server_hosts playbooks/dev.yml --extra-vars "project_root=~/simplezat"
+
 workflows:
   version: 2
   simplezat_pipeline:
