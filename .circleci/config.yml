@@ -56,9 +56,9 @@ jobs:
       - run:
           name: Build Stable Images
           command: |
-            docker build -t draf/simplezat:stable -f Dockerfile.dev .
+            docker build -t 400206/simplezat:stable -f Dockerfile.dev .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push draf/simplezat:stable
+            docker push 400206/simplezat:stable
       - add_ssh_keys:
           fingerprints:
             - "97:99:40:f0:6c:cf:b2:6a:61:7b:b2:e8:1f:9e:49:cb"
