@@ -61,11 +61,12 @@ jobs:
             docker push draf/simplezat:stable
       - add_ssh_keys:
           fingerprints:
-            - ""
+            - "97:99:40:f0:6c:cf:b2:6a:61:7b:b2:e8:1f:9e:49:cb"
       - run:
           name: Deploy to Development Server
           command: |
             cd deployment
+            ssh-keyscan -H 335.247.163.63 >> ~/.ssh/known_hosts
             pipenv install
             pipenv run ansible-playbook -i server_hosts playbooks/dev.yml --extra-vars "project_root=~/simplezat"
 workflows:
