@@ -1,5 +1,5 @@
 [dev]
-35.247.163.63  ansible_ssh_user=jessadakorn
+35.247.163.63  ansible_ssh_user=jessadakorn ansible_connection=ssh
 
 [prod]
-35.241.75.199  ansible_ssh_user=jessadakorn
+35.241.75.199  ansible_ssh_user=jessadakorn ansible_connection=ssh
