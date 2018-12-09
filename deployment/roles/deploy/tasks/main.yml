@@ -1,0 +1,10 @@
+- name: copying docker compose file to server
+  copy:
+    src:  "{{ project_path }}/docker-compose.{{ server_env }}.yml"
+    dest: docker-compose.yml
+
+- name: pull images
+  command: docker-compose pull
+
+- name: start application
+  command: docker-compose up -d

@@ -41,8 +41,7 @@ class CommentViewTest(TestCase):
                 }
             )
             response = self.client.get(url)
-
-            expected = '<h1>Any comment?</h1>'
+            expected = '<h1> Any comment ? </h1>'
             self.assertContains(response, expected, status_code=200)
 
             expected = '<form action="." method="post">' \
@@ -51,8 +50,10 @@ class CommentViewTest(TestCase):
 
             expected = '<textarea name="comment"></textarea>' \
                 f'<input type="hidden" name="rating" value="{each}">' \
-                '<button type="submit">Submit</button></form>'
+                '<input type="submit"></form>'
             self.assertContains(response, expected, status_code=200)
+
+
 
     def test_submit_comment_form_should_redirect_to_thanks_page(self):
         url = reverse(
@@ -70,5 +71,5 @@ class ThanksViewTest(TestCase):
         url = reverse('thanks')
         response = self.client.get(url)
 
-        expected = '<h1>Thank You!</h1>'
+        expected = '<h1>Thank you!</h1>'
         self.assertContains(response, expected, status_code=200)

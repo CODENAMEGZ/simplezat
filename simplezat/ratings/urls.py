@@ -8,6 +8,6 @@ from .views import (
 
 urlpatterns = [
     path('',RatingView.as_view(),name='ratings'),
-    path('thanks/', ThankView.as_view(),name='thankyou'),
+    path('thanks/', ThankView.as_view(),name='thanks'),
     path('<str:rating>/',CommentView.as_view(), name='comments'),
 ]

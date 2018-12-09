@@ -26,7 +26,7 @@ class CommentView(TemplateView):
         )
 
     def post(self, request, rating):
-        return redirect(reverse('thankyou'))
+        return redirect(reverse('thanks'))
 
 
 class ThankView(TemplateView):

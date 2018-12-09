@@ -1,0 +1,5 @@
+[dev]
+335.247.163.63  ansible_ssh_user=jessadakorn
+
+[prod]
+35.241.75.199  ansible_ssh_user=jessadakorn
