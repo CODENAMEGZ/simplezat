@@ -12,7 +12,7 @@ context('Rating', () => {
       cy.get('img[alt="Positive"]').click()
       cy.wait(1000)
   
-      cy.contains('Any comment ? ')
+      cy.contains('Any comment ?')
       cy.get('textarea[name="comment"]').type('You are doing great!')
       cy.get('[type="submit"]').click()
       cy.wait(1000)
