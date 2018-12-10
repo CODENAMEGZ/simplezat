@@ -1,15 +1,28 @@
 version: '3.3'
 
 services:
+  nginx:
+    image: 400206/simplezat-nginx:live
+    ports:
+      - "80:80"
+    volumes:
+      - app-staticfiles:/app/static
+    depends_on:
+      - app
+
   db:
     image: postgres:11.1-alpine
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
   app:
     image: 400206/simplezat:live
-    ports:
-      - "8000:8000"
-    command: ./entrypoint.production.sh
+    volumes:
+      - app-staticfiles:/app/static
+    command: ./entrypoint.dev.sh
+    depends_on:
+      - db
 
 volumes:
-  postgress-data:
+  postgres-data:
+  app-staticfiles:
