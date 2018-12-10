@@ -21,6 +21,7 @@ jobs:
           name: Install Dependencies
           command: |
             pipenv install --dev
+
   static_analysis:
     working_directory: ~/simplezat
     docker:
@@ -78,7 +79,7 @@ jobs:
             docker push 400206/simplezat-nginx:stable
             docker push 400206/simplezat-nginx:$CIRCLE_SHA1
             docker build -t 400206/simplezat:stable -f Dockerfile.dev .
-            docker tag 400206/simplezat:stable zkan/simplezat:$CIRCLE_SHA1
+            docker tag 400206/simplezat:stable 400206/simplezat:$CIRCLE_SHA1
             docker push 400206/simplezat:stable
             docker push 400206/simplezat:$CIRCLE_SHA1
       - add_ssh_keys
