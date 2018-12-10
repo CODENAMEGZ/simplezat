@@ -73,8 +73,12 @@ jobs:
           name: Build Stable Images
           command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker build -t 400206/simplezat-nginx:stable -f nginx/Dockerfile nginx/
+            docker tag 400206/simplezat-nginx:stable 400206/simplezat-nginx:$CIRCLE_SHA1
+            docker push 400206/simplezat-nginx:stable
+            docker push 400206/simplezat-nginx:$CIRCLE_SHA1
             docker build -t 400206/simplezat:stable -f Dockerfile.dev .
-            docker tag 400206/simplezat:stable 400206/simplezat:$CIRCLE_SHA1
+            docker tag 400206/simplezat:stable zkan/simplezat:$CIRCLE_SHA1
             docker push 400206/simplezat:stable
             docker push 400206/simplezat:$CIRCLE_SHA1
       - add_ssh_keys
@@ -103,10 +107,14 @@ jobs:
       - run:
           name: Deploy to Production Server
           command: |
-            cd deployment
-            ssh-keyscan -H 35.240.154.95 >> ~/.ssh/known_hosts
-            pipenv install
-            pipenv run ansible-playbook -i server_hosts playbooks/prod.yml --extra-vars "project_root=~/simplezat"
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker pull 400206/simplezat-nginx:stable
+            docker tag 400206/simplezat-nginx:stable 400206/simplezat-nginx:live
+            docker push 400206/simplezat-nginx:live
+            docker build -t 400206/simplezat:live -f Dockerfile.prod .
+            docker tag 400206/simplezat:live 400206/simplezat:$CIRCLE_SHA1
+            docker push 400206/simplezat:live
+            docker push 400206/simplezat:$CIRCLE_SHA1
 workflows:
   version: 2
   simplezat_pipeline:
