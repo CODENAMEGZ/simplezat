@@ -20,5 +20,5 @@ services:
     command: ./entrypoint.dev.sh
 
 volumes:
-  postgress-data:
+  postgres-data:
   app-staticfiles:
