@@ -5,9 +5,12 @@ verify_ssl = true
 
 [dev-packages]
 flake8 = "*"
+pytest-django = "*"
 
 [packages]
 django = "*"
+psycopg2 = "==2.7.1"
+
 
 [requires]
 python_version = "3.7"

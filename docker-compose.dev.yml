@@ -1,6 +1,10 @@
 version: '3.3'
 
 services:
+  db:
+    image: circleci/pygres:11.1-alpine
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
   app:
     image: 400206/simplezat:stable
     ports:
