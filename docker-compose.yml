@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   db:
-    image: postgres:11.1
+    image: ppostgres:11.1-alpine
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
