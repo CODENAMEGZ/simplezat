@@ -56,7 +56,7 @@ jobs:
       - run:
           name: Run Acceptance Tests
           command: |
-            cd tests
+            cd test
             npm install
             CYPRESS_baseUrl=http://35.243.99.19:8000 ./node_modules/.bin/cypress run --spec 'cypress/integration/draf/*'
       
