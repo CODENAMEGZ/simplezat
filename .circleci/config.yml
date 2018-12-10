@@ -60,7 +60,7 @@ jobs:
           command: |
             cd test
             npm install
-            CYPRESS_baseUrl=http://35.240.154.95:8000 ./node_modules/.bin/cypress run --spec 'cypress/integration/draf/*'
+            CYPRESS_baseUrl=http://35.240.154.95 ./node_modules/.bin/cypress run --spec 'cypress/integration/draf/*'
       
   deploy_dev:
     working_directory: ~/simplezat
@@ -74,10 +74,12 @@ jobs:
           name: Build Stable Images
           command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
+
             docker build -t 400206/simplezat-nginx:stable -f nginx/Dockerfile nginx/
             docker tag 400206/simplezat-nginx:stable 400206/simplezat-nginx:$CIRCLE_SHA1
             docker push 400206/simplezat-nginx:stable
             docker push 400206/simplezat-nginx:$CIRCLE_SHA1
+
             docker build -t 400206/simplezat:stable -f Dockerfile.dev .
             docker tag 400206/simplezat:stable 400206/simplezat:$CIRCLE_SHA1
             docker push 400206/simplezat:stable
@@ -90,6 +92,7 @@ jobs:
             ssh-keyscan -H 35.240.154.95 >> ~/.ssh/known_hosts
             pipenv install
             pipenv run ansible-playbook -i server_hosts playbooks/dev.yml --extra-vars "project_root=~/simplezat"
+  
   deploy_production:
     working_directory: ~/simplezat
     docker:
@@ -101,13 +104,6 @@ jobs:
       - run:
           name: Build Live Images
           command: |
-            docker build -t 400206/simplezat:live -f Dockerfile.prod .
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push 400206/simplezat:live
-      - add_ssh_keys
-      - run:
-          name: Deploy to Production Server
-          command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker pull 400206/simplezat-nginx:stable
             docker tag 400206/simplezat-nginx:stable 400206/simplezat-nginx:live
@@ -116,6 +112,16 @@ jobs:
             docker tag 400206/simplezat:live 400206/simplezat:$CIRCLE_SHA1
             docker push 400206/simplezat:live
             docker push 400206/simplezat:$CIRCLE_SHA1
+
+      - add_ssh_keys
+      - run:
+          name: Deploy to Production Server
+          command: |
+            cd deployment
+            ssh-keyscan -H 35.241.75.199 >> ~/.ssh/known_hosts
+            pipenv install
+            pipenv run ansible-playbook -i server_hosts playbooks/prod.yml --extra-vars "project_root=~/simplezat"
+
 workflows:
   version: 2
   simplezat_pipeline:
