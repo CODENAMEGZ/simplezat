@@ -37,7 +37,7 @@ class RatingFormTest(TestCase):
         form = RatingForm(data=data)
         self.assertFalse(self.form.is_valid())
 
-        expected ={
+        expected = {
             'comment': ['Please write some comment..']
         }
         self.assertDictEqual(form.errors, expected)

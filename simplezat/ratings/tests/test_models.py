@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from ..models import Rating
 
+
 class RatingTest(TestCase):
     def test_save_rating(self):
         rating = Rating()

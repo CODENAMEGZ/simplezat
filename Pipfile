@@ -10,7 +10,7 @@ pytest-django = "*"
 [packages]
 django = "*"
 psycopg2 = "==2.7.1"
-
+uwsgi = "*"
 
 [requires]
 python_version = "3.7"

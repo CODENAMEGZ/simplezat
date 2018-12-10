@@ -38,8 +38,7 @@ class CommentView(TemplateView):
             form.save()
 
             return redirect(reverse('thanks'))
-        
-        return  render(
+        return render(
             request,
             self.template,
             {
@@ -47,6 +46,7 @@ class CommentView(TemplateView):
                 'form': form
             }
         )
+
 
 class ThankView(TemplateView):
     template = 'thank.html'

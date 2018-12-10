@@ -18,5 +18,3 @@ class RatingForm(forms.ModelForm):
                 'required': 'Please write some comment..'
             },
         }
-
-
