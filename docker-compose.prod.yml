@@ -4,5 +4,5 @@ services:
   app:
     image: 400206/simplezat:live
     ports:
-      - '8000:8000'
+      - "8000:8000"
     command: ./entrypoint.production.sh

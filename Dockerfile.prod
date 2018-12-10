@@ -8,7 +8,7 @@ WORKDIR $APPLICATION_ROOT
 
 RUN pip3 install pipenv
 
-COPY . $APPLICATION_ROOT/ 
+COPY . $APPLICATION_ROOT/
 RUN pipenv install --ignore-pipfile
 
 EXPOSE 8000

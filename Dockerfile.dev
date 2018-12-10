@@ -6,10 +6,9 @@ ENV APPLICATION_ROOT /app
 RUN mkdir $APPLICATION_ROOT
 WORKDIR $APPLICATION_ROOT
 
-Run pip3 install pipenv
-
+RUN pip3 install pipenv
 
 COPY . $APPLICATION_ROOT/
-Run pipenv install --dev --ignore-pipfile
+RUN pipenv install --dev --ignore-pipfile
 
 EXPOSE 8000

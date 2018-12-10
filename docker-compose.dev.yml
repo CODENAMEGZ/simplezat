@@ -1,11 +1,8 @@
-version : '3.3'
+version: '3.3'
 
 services:
   app:
     image: 400206/simplezat:stable
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
     ports:
       - "8000:8000"
     command: ./entrypoint.dev.sh
