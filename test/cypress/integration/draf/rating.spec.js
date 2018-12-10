@@ -17,24 +17,17 @@ context('Rating', () => {
       cy.get('[type="submit"]').click()
       cy.wait(1000)
   
-      cy.contains('Thank you!')
+      cy.get('h1').should('contain', 'Thank you!')
     })
-    it('should show error message when give rating without comment') ,  () =>  {
-      cy.get('img[alt="Positive"]').click
-      cy.wait(1000)
-      
-      cy.get('button').click()
-      cy.wait(1000)
+    it('should require comment after give rating',  () =>  {
+      cy.get('img[alt="Positive"]').click()
+      cy.wait(500)
 
-      cy.get('body').should('not.contain',  'Thank you!')
-      cy.get('p').should('contain', 'please write some comment..')
+      cy.get('textarea[name="comment"]').should('have.attr', 'required')
 
-      cy.contains('Any comment ?')
-      cy.get('textarea[name="comment"]').type('You are doing great!')
+
       cy.get('[type="submit"]').click()
-      cy.wait(1000)
-    }
-
-
+      cy.get('body').should('not.contain', 'Thank you!')
+    })
   })
   
